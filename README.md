@@ -7,7 +7,7 @@ This project has 3 parts, the server, the basic tally package, and a tally that 
 ## [The Server]()
 This is required by either tally type. This provides the connection to the ATEM and translates the commands for the tallys to read
 
-## [The Basic Tally]()
+## [The Basic Tally](https://github.com/Kardinia-Church/Blackmagic-ATEM-Tally/tree/main/tally)
 This is the basic tally using the NodeMCU
 
 ### Features
@@ -19,7 +19,7 @@ This is the basic tally using the NodeMCU
 * Uses network broadcast so defining ip addresses is not needed, they just have to be on the same network
 * The show blue feature which shows a blue light to the stage to show where the camera is
 
-## [The CCU Tally]()
+## [The CCU Tally](https://github.com/Kardinia-Church/Blackmagic-ATEM-Tally/tree/main/CCUTally)
 This is a more feature rich tally using the ESP32.
 
 ### Features

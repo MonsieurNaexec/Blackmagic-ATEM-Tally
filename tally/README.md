@@ -25,7 +25,7 @@ The following hardware is required to build a single tally
 ### 3D Case
 * If you wish to use the 3D printed case provided print the bottom.stl and top.stl files found in the [3Ds folder](https://github.com/Kardinia-Church/ATEM-Tally/tree/subscription-based/3Ds)
 ### Wiring it up
-![Circuit Diagram](/images/circuitDiagram.png)
+![Circuit Diagram](https://github.com/Kardinia-Church/Blackmagic-ATEM-Tally/blob/main/tally/images/circuitDiagram.png)
 * Note the first LED in the chain is the user LED
 ### Programming the NodeMCU
 * In order to program the NodeMCU you either need to download [Visual Studio Code](https://code.visualstudio.com/) and install the [PlatformIO](https://platformio.org/install/ide?install=vscode) extension which is used to compile the project
