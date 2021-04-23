@@ -1,9 +1,7 @@
 /*
   ATEM Tally by Kardinia Church 2020
   A simple tally light that shows an input's tally state using NodeRed as a server
-
   https://github.com/Kardinia-Church/ATEM-Tally
-
   main.cpp file responsible for the main entry point and code functions
 */
 
@@ -48,7 +46,7 @@ void subscribe() {
     buffer[i + 2] = ignoredMEs[i];
   }
 
-  udp.write(buffer, (sizeof(ignoredMEs) / sizeof(ignoredMEs[0])) + 4);
+  udp.write(buffer, (sizeof(ignoredMEs) / sizeof(ignoredMEs[0])) + 2);
   udp.endPacket();
   lastMessage = millis();
 }
@@ -98,6 +96,7 @@ void receivePacket() {
       case CMD_PING: {
         pingSent = false;
         lastMessage = millis();
+        Serial.println("RESPONSE");
         break;
       }
     }
@@ -129,10 +128,11 @@ void receivePacket() {
       strip.setPixelColor(1, offColor);
     }
   }
-  else if(lastMessage + 1000 < millis()) {
+  else if(lastMessage + 5000 < millis()) {
+    Serial.println("CHECK PING");
     if(pingSent) {
-      strip.setPixelColor(0, blueColor);
-      strip.setPixelColor(1, blueColor);
+      // strip.setPixelColor(0, blueColor);
+      // strip.setPixelColor(1, blueColor);
       subscribe();
     }
     else {
