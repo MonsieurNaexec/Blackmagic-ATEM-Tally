@@ -15,7 +15,7 @@ There are 2 major parts that are needed to make this work, this is the tally(s) 
 ## Server Side
 The server is required to talk to the ATEM. The server then sends out messages to the tally(s) which will show the state.
 
-[Click here]() to see information on how to install the server
+[Click here](https://github.com/Kardinia-Church/Blackmagic-ATEM-Tally/tree/main/server) to see information on how to install the server
 
 ## Tallys
 ### Required Hardware
