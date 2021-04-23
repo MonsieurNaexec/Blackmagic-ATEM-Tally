@@ -6,7 +6,7 @@ This project is still in development so it is missing certain features and has s
 
 ## What's working?
 So far this project supports:
-- Controlling CCU parameters using a the [server package]() as a middle man to transfer the packets
+- Controlling CCU parameters using a the [server package](https://github.com/Kardinia-Church/Blackmagic-ATEM-Tally/tree/main/server) as a middle man to transfer the packets
 - Serial configuration
 - Tallying
 - Direct ATEM connection for both CCU and tallying
