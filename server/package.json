@@ -1,14 +1,14 @@
 {
-  "name": "atemmidiccu",
+  "name": "atemtallyserver",
   "version": "1.0.0",
-  "description": "A nodejs project to use a Behringer xTouch Extender for a BlackMagic switcher CCU",
+  "description": "The server for the ATEM tally project",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Kardinia-Church/ATEMMidiCCU.git"
+    "url": "git+https://github.com/Kardinia-Church/Blackmagic-ATEM-Tally.git"
   },
   "keywords": [
     "atem",
@@ -22,12 +22,11 @@
   "author": "Karidnia Church",
   "license": "GPL-3.0-or-later",
   "bugs": {
-    "url": "https://github.com/Kardinia-Church/ATEMMidiCCU/issues"
+    "url": "https://github.com/Kardinia-Church/Blackmagic-ATEM-Tally/issues"
   },
-  "homepage": "https://github.com/Kardinia-Church/ATEMMidiCCU#readme",
+  "homepage": "https://github.com/Kardinia-Church/Blackmagic-ATEM-Tally#readme",
   "dependencies": {
     "atem-connection": "~1.0.0",
-    "midi": "1.0.0",
     "nconf": "0.11.2"
   }
 }
