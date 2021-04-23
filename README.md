@@ -4,7 +4,7 @@ A simple tally light using the ESP to provide tally states from a Blackmagic ATE
 This project has 3 parts, the server, the basic tally package, and a tally that also supports CCU control of a Blackmagic camera using it's bluetooth connection.
 
 # Project Parts
-## [The Server](/tree/main/CCUTally)
+## [The Server](tree/main/CCUTally)
 This is required by either tally type. This provides the connection to the ATEM and translates the commands for the tallys to read
 
 ## [The Basic Tally]()
