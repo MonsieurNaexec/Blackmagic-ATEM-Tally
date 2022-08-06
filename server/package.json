@@ -27,6 +27,6 @@
   "homepage": "https://github.com/Kardinia-Church/Blackmagic-ATEM-Tally#readme",
   "dependencies": {
     "atem-connection": "~1.0.0",
-    "nconf": "0.11.2"
+    "nconf": ">=0.11.4"
   }
 }
