@@ -26,8 +26,10 @@ This tally uses an ESP32 and provides both the tally feature as well as CCU cont
 * Serial configuration editor so you don't need to recompile the code every time you need to change a setting
 
 # Limitations
+Please note this project was not completed and i cannot work on it anymore. The following limitations are known:
 1. The CCU tally is not completed, see [The CCU Tally](https://github.com/Kardinia-Church/Blackmagic-ATEM-Tally/tree/main/CCUTally) for more information.
 1. Currently the CCU is not supported with the server, NodeRed is only supported.
+2. The direct ATEM connection does not work.
 
 # Installation
 1. First install the [server](https://github.com/Kardinia-Church/Blackmagic-ATEM-Tally/tree/main/server) as it is required by both tally types
