@@ -79,7 +79,7 @@ function sendTallyData(forceSend = false) {
     }
 
     //Check MEs
-    for (var j in atem.state.video.mixEffects) {
+    for (var j = 0; j < atem.state.video.mixEffects.length; j++) {
       if (!tallyDevices[i].ignoredMEs.includes(j + 1)) {
         //Check US keyer
         for (var k in atem.state.video.mixEffects[j].upstreamKeyers) {
