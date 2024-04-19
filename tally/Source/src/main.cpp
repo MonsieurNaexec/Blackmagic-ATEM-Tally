@@ -1,7 +1,9 @@
 /*
   ATEM Tally by Kardinia Church 2020
   A simple tally light that shows an input's tally state using NodeRed as a server
+
   https://github.com/Kardinia-Church/ATEM-Tally
+
   main.cpp file responsible for the main entry point and code functions
 */
 
@@ -25,7 +27,7 @@ unsigned long thisMs = 0;
 #define CMD_USKEY 0x04
 
 WiFiUDP udp;
-Adafruit_NeoPixel strip = Adafruit_NeoPixel(2, 4, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel strip = Adafruit_NeoPixel(2, 0, NEO_GRB + NEO_KHZ800);
 IPAddress serverIP(255, 255, 255, 255);
 unsigned long lastMessage = millis();
 bool programTally = false;
@@ -42,13 +44,21 @@ void subscribe()
   Serial.println("Subscribe");
   // Subscribe cmd, inputId, ignoreME(s)
   udp.beginPacket(serverIP, OUTGOING_PORT);
-  uint8_t buffer[(sizeof(ignoredMEs) / sizeof(ignoredMEs[0])) + 2] = {CMD_SUBSCRIBE, inputID};
-  for (int i = 0; i < (sizeof(ignoredMEs) / sizeof(ignoredMEs[0])); i++)
+  IPAddress ip = WiFi.localIP();
+  uint8_t buffer[(sizeof(ignoredMEs) / sizeof(ignoredMEs[0])) + 6] = {
+      CMD_SUBSCRIBE,
+      inputID,
+      ip[0],
+      ip[1],
+      ip[2],
+      ip[3],
+  };
+  for (uint i = 0; i < (sizeof(ignoredMEs) / sizeof(ignoredMEs[0])); i++)
   {
     buffer[i + 2] = ignoredMEs[i];
   }
 
-  udp.write(buffer, (sizeof(ignoredMEs) / sizeof(ignoredMEs[0])) + 2);
+  udp.write(buffer, (sizeof(ignoredMEs) / sizeof(ignoredMEs[0])) + 6);
   udp.endPacket();
   lastMessage = millis();
 }
@@ -151,13 +161,12 @@ void receivePacket()
       strip.setPixelColor(1, offColor);
     }
   }
-  else if (lastMessage + 5000 < millis())
+  else if (lastMessage + 1000 < millis())
   {
-    Serial.println("CHECK PING");
     if (pingSent)
     {
-      // strip.setPixelColor(0, blueColor);
-      // strip.setPixelColor(1, blueColor);
+      strip.setPixelColor(0, blueColor);
+      strip.setPixelColor(1, blueColor);
       subscribe();
     }
     else

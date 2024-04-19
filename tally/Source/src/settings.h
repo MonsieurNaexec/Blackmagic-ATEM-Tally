@@ -7,7 +7,7 @@
   settings.h The settings file for the tally
 */
 
-int inputID = 1;                            //The input id
+uint8_t inputID = 1;                        // The input id
 const char *ssid = "ONVEP-Prod";            // The wifi SSID to connect to
 const char *password = "ONVEP123";          // The wifi password
 uint8_t ignoredMEs[3] = {2, 3, 4};          //What MEs to ignore. By default this is ME 2, 3, 4 (So ME1 will be the tally ME).

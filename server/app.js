@@ -182,13 +182,14 @@ function connect() {
       case 0xaf: {
         var ignoredMEs = [];
         var ignoredMEsFriendly = "";
-        for (var i = 2; i < msg.length; i++) {
-          ignoredMEs[i - 2] = msg[i];
+        var ip = msg[2] + "." + msg[3] + "." + msg[4] + "." + msg[5];
+        for (var i = 6; i < msg.length; i++) {
+          ignoredMEs[i - 6] = msg[i];
           ignoredMEsFriendly += msg[i] + ",";
         }
         console.log(
           "Tally subscribe request from " +
-            info.address +
+            ip +
             " InputID: " +
             msg[1] +
             " Ignored MEs: " +
@@ -196,7 +197,7 @@ function connect() {
         );
 
         //Add this device to our pool to send to
-        tallyDevices[info.address] = {
+        tallyDevices[ip] = {
           inputId: msg[1],
           ignoredMEs: ignoredMEs,
           isProg: false,
@@ -205,7 +206,7 @@ function connect() {
           isUSKey: false,
         };
 
-        sendPing(info.address);
+        sendPing(ip);
         sendTallyData();
         break;
       }
