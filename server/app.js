@@ -1,7 +1,6 @@
-const { Atem, AtemStateUtil } = require("atem-connection");
+const { Atem } = require("atem-connection");
 var nconf = require("nconf");
 var udp = require("dgram");
-var buffer = require("buffer");
 var client = udp.createSocket("udp4");
 var atemIP = undefined;
 const atem = new Atem();
@@ -9,7 +8,6 @@ var server = udp.createSocket("udp4");
 var incomingPort = 8001;
 var outgoingPort = 5657;
 
-var ccuDevices = {};
 var tallyDevices = {};
 
 //Attempt to load in the configuration
@@ -139,8 +137,6 @@ function sendCCUData() {}
 
 //Connect to the ATEM
 function connect() {
-  var self = this;
-
   //Set the handlers
   atem.on("info", function (message) {
     console.log("INFO: " + message);
@@ -154,7 +150,7 @@ function connect() {
     sendTallyData();
     sendCCUData();
 
-    atem.on("stateChanged", (state, pathToChange) => {
+    atem.on("stateChanged", () => {
       console.log("ATEM State changed");
       sendTallyData();
       sendCCUData();
@@ -221,10 +217,6 @@ function connect() {
         break;
       }
     }
-
-    // for(var i = 0; i < msg.length; i++) {
-    //     console.log(msg[i]);
-    // }
   });
 
   //Connect
