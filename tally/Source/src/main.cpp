@@ -13,7 +13,7 @@
 
 #define SERIAL_BAUD 115200
 #define INCOMING_PORT 5657
-#define OUTGOING_PORT 8001
+#define OUTGOING_PORT 8002
 #define DEBUG false
 unsigned long thisMs = 0;
 

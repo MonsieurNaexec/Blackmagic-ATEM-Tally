@@ -8,8 +8,8 @@
 */
 
 int inputID = 1;                            //The input id
-const char* ssid = "";                      //The wifi SSID to connect to
-const char* password = "";                  //The wifi password
+const char *ssid = "ONVEP-Prod";            // The wifi SSID to connect to
+const char *password = "ONVEP123";          // The wifi password
 uint8_t ignoredMEs[3] = {2, 3, 4};          //What MEs to ignore. By default this is ME 2, 3, 4 (So ME1 will be the tally ME).
 bool previewEnabled = true;                 //Should preview be enabled?
 bool programEnabled = true;                 //Should program be enabled?
