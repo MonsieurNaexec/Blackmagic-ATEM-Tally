@@ -81,16 +81,16 @@ function sendTallyData(forceSend = false) {
     }
 
     //Check MEs
-    for (var j in atem.state.video.ME) {
-      if (!tallyDevices[i].ignoredMEs.includes(j)) {
+    for (var j in atem.state.video.mixEffects) {
+      if (!tallyDevices[i].ignoredMEs.includes(j + 1)) {
         //Check US keyer
-        for (var k in atem.state.video.ME[j].upstreamKeyers) {
+        for (var k in atem.state.video.mixEffects[j].upstreamKeyers) {
           if (
-            (atem.state.video.ME[j].upstreamKeyers[k].fillSource ==
+            (atem.state.video.mixEffects[j].upstreamKeyers[k].fillSource ==
               tallyDevices[i].inputId ||
-              atem.state.video.ME[j].upstreamKeyers[k].cutSource ==
+              atem.state.video.mixEffects[j].upstreamKeyers[k].cutSource ==
                 tallyDevices[i].inputId) &&
-            atem.state.video.ME[j].upstreamKeyers[k].onAir
+            atem.state.video.mixEffects[j].upstreamKeyers[k].onAir
           ) {
             isUSKey = true;
             break;
@@ -99,12 +99,14 @@ function sendTallyData(forceSend = false) {
 
         if (!isProg) {
           isProg =
-            atem.state.video.ME[j].programInput == tallyDevices[i].inputId ||
-            atem.state.video.ME[j].inTransition;
+            atem.state.video.mixEffects[j].programInput ==
+              tallyDevices[i].inputId ||
+            atem.state.video.mixEffects[j].inTransition;
         }
         if (!isPrev) {
           isPrev =
-            atem.state.video.ME[j].previewInput == tallyDevices[i].inputId;
+            atem.state.video.mixEffects[j].previewInput ==
+            tallyDevices[i].inputId;
         }
       }
     }
