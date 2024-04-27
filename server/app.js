@@ -10,6 +10,21 @@ var outgoingPort = 5657;
 
 var tallyDevices = {};
 
+function deepFind(obj, path) {
+  var paths = path.split("."),
+    current = obj,
+    i;
+
+  for (i = 0; i < paths.length; ++i) {
+    if (current[paths[i]] == undefined) {
+      return undefined;
+    } else {
+      current = current[paths[i]];
+    }
+  }
+  return current;
+}
+
 //Attempt to load in the configuration
 function loadConfig(callback) {
   nconf.use("file", { file: "./config.json" });
@@ -80,7 +95,7 @@ function sendTallyData(forceSend = false) {
 
     //Check MEs
     for (var j = 0; j < atem.state.video.mixEffects.length; j++) {
-      if (!tallyDevices[i].ignoredMEs.includes(j + 1)) {
+      if (tallyDevices[i].watchedMEs.includes(j + 1)) {
         //Check US keyer
         for (var k in atem.state.video.mixEffects[j].upstreamKeyers) {
           if (
@@ -99,7 +114,9 @@ function sendTallyData(forceSend = false) {
           isProg =
             atem.state.video.mixEffects[j].programInput ==
               tallyDevices[i].inputId ||
-            atem.state.video.mixEffects[j].inTransition;
+            (atem.state.video.mixEffects[j].previewInput ==
+              tallyDevices[i].inputId &&
+              atem.state.video.mixEffects[j].transitionPosition.inTransition);
         }
         if (!isPrev) {
           isPrev =
@@ -150,8 +167,11 @@ function connect() {
     sendTallyData();
     sendCCUData();
 
-    atem.on("stateChanged", () => {
-      console.log("ATEM State changed");
+    atem.on("stateChanged", (_, args) => {
+      console.log("ATEM State changed:");
+      for (arg of args) {
+        console.log(arg, ":", deepFind(_, arg));
+      }
       sendTallyData();
       sendCCUData();
     });
@@ -178,26 +198,25 @@ function connect() {
     switch (msg[0]) {
       //Subscribe request for tally function
       case 0xaf: {
-        var ignoredMEs = [];
-        var ignoredMEsFriendly = "";
-        var ip = msg[2] + "." + msg[3] + "." + msg[4] + "." + msg[5];
-        for (var i = 6; i < msg.length; i++) {
-          ignoredMEs[i - 6] = msg[i];
-          ignoredMEsFriendly += msg[i] + ",";
+        var watchedMEsData = msg[2];
+        var watchedMEs = [];
+        var ip = info.address; //msg[2] + "." + msg[3] + "." + msg[4] + "." + msg[5];
+        for (let i = 1; watchedMEsData > 0; i++, watchedMEsData >>= 1) {
+          if (watchedMEsData & 1) watchedMEs.push(i);
         }
         console.log(
           "Tally subscribe request from " +
             ip +
             " InputID: " +
             msg[1] +
-            " Ignored MEs: " +
-            ignoredMEsFriendly.slice(0, -1)
+            " Watched MEs: " +
+            watchedMEs.join(", ")
         );
 
         //Add this device to our pool to send to
         tallyDevices[ip] = {
           inputId: msg[1],
-          ignoredMEs: ignoredMEs,
+          watchedMEs: watchedMEs,
           isProg: false,
           isPrev: false,
           isDSKey: false,
