@@ -5,8 +5,8 @@ var client = udp.createSocket("udp4");
 var atemIP = process.env.ATEM_IP || "127.0.0.1";
 const atem = new Atem();
 var server = udp.createSocket("udp4");
-var incomingPort = 8001;
-var outgoingPort = 5657;
+var incomingPort = process.env.INCOMING_PORT || 8001;
+var outgoingPort = process.env.OUTGOING_PORT || 5657;
 
 var tallyDevices = {};
 
