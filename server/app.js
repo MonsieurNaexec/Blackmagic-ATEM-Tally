@@ -1,8 +1,8 @@
 const { Atem } = require("atem-connection");
-var nconf = require("nconf");
+require("dotenv").config();
 var udp = require("dgram");
 var client = udp.createSocket("udp4");
-var atemIP = undefined;
+var atemIP = process.env.ATEM_IP || "127.0.0.1";
 const atem = new Atem();
 var server = udp.createSocket("udp4");
 var incomingPort = 8001;
@@ -23,38 +23,6 @@ function deepFind(obj, path) {
     }
   }
   return current;
-}
-
-//Attempt to load in the configuration
-function loadConfig(callback) {
-  nconf.use("file", { file: "./config.json" });
-  nconf.load();
-
-  var error = false;
-  if (nconf.get("atemIP") === undefined) {
-    nconf.set("atemIP", "127.0.0.1");
-    error = true;
-  }
-
-  if (error) {
-    //Error
-    console.log(
-      "There is an issue with the configuration file. Please check the configuration file config.json"
-    );
-
-    nconf.save(function (error) {
-      if (error) {
-        console.log(
-          "An error occurred saving the config file: " + error.message
-        );
-      }
-      callback(false);
-    });
-  } else {
-    //Load in the settings
-    atemIP = nconf.get("atemIP");
-    callback(true);
-  }
 }
 
 //Send out a message to a device
@@ -244,15 +212,6 @@ function connect() {
 }
 
 //Main loop
-console.log("ATEM tally server by Kardinia Church 2021");
-console.log("Attempting to load configuration");
-
-loadConfig(function (success) {
-  if (success == true) {
-    //Everything seems good lets begin!
-    console.log("Success, attempting connection to the ATEM at " + atemIP);
-    connect();
-  } else {
-    console.error("Initialization errors occurred, cannot continue");
-  }
-});
+console.log("ATEM tally server by M. Naexec 2024");
+console.log("Attempting connection to the ATEM at " + atemIP);
+connect();
